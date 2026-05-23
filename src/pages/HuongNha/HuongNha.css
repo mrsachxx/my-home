@@ -1,0 +1,327 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Be+Vietnam+Pro:wght@300;400;500&display=swap');
+
+:root {
+  --color-text-primary: #1a1a1a;
+  --color-text-secondary: #6b7280;
+  --color-text-tertiary: #9ca3af;
+  --color-background-primary: #ffffff;
+  --color-background-secondary: #f9fafb;
+  --color-border-tertiary: #e5e7eb;
+  --color-border-secondary: #d1d5db;
+  --border-radius-lg: 14px;
+  --border-radius-md: 10px;
+  --green: #1D9E75;
+  --green-dark: #0F6E56;
+  --green-bg: #E1F5EE;
+  --amber: #854F0B;
+  --amber-bg: #FAEEDA;
+  --red: #A32D2D;
+  --red-bg: #FCEBEB;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── Page wrapper ── */
+.hn-wrap {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  max-width: 600px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+/* ── Hero ── */
+.hn-hero {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.hn-hero-tag {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  margin: 0 0 0.4rem;
+}
+
+.hn-hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+  margin: 0 0 0.3rem;
+}
+
+.hn-hero-sub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  font-weight: 300;
+  margin: 0 0 1rem;
+}
+
+.hn-identity-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  border-radius: 20px;
+  padding: 4px 12px;
+  border: 0.5px solid var(--color-border-tertiary);
+  background: var(--color-background-secondary);
+  color: var(--color-text-secondary);
+}
+
+.hn-pill i { font-size: 13px; }
+
+.hn-pill.pill-teal {
+  background: var(--green-bg);
+  border-color: #9FE1CB;
+  color: var(--green-dark);
+}
+
+.hn-pill.pill-fire {
+  background: var(--amber-bg);
+  border-color: #FAC775;
+  color: var(--amber);
+}
+
+/* ── Section label ── */
+.hn-section {
+  padding: 1.5rem 1.5rem 0;
+}
+
+.hn-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+  margin: 0 0 1rem;
+}
+
+/* ── Compass card ── */
+.compass-card {
+  margin: 0 1.5rem 1.5rem;
+  background: var(--color-background-secondary);
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Compass SVG ring */
+.compass-wrap {
+  flex-shrink: 0;
+  position: relative;
+  width: 110px;
+  height: 110px;
+}
+
+.compass-wrap svg {
+  width: 110px;
+  height: 110px;
+}
+
+.compass-info {
+  flex: 1;
+}
+
+.compass-direction {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  margin-bottom: 2px;
+}
+
+.compass-type {
+  font-size: 13px;
+  color: var(--green-dark);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.compass-note {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* ── Direction grid ── */
+.dir-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0 1.5rem 1.5rem;
+}
+
+.dir-card {
+  border-radius: var(--border-radius-md);
+  padding: 0.9rem 1rem;
+  border: 0.5px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.dir-card.good {
+  background: var(--green-bg);
+  border-color: #9FE1CB;
+}
+
+.dir-card.bad {
+  background: var(--red-bg);
+  border-color: #F7C1C1;
+}
+
+.dir-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.dir-card.good .dir-name { color: #085041; }
+.dir-card.bad  .dir-name { color: #791F1F; }
+
+.dir-star {
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.dir-card.good .dir-star { color: var(--green-dark); }
+.dir-card.bad  .dir-star { color: var(--red); }
+
+.dir-icon {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.8rem;
+  font-size: 16px;
+  opacity: 0.4;
+}
+
+.dir-card.good .dir-icon { color: var(--green-dark); }
+.dir-card.bad  .dir-icon { color: var(--red); }
+
+/* ── Info rows (bàn thờ / bếp) ── */
+.info-block {
+  margin: 0 1.5rem 1.5rem;
+  border: 0.5px solid var(--color-border-tertiary);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+}
+
+.info-block-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0.9rem 1.1rem;
+  background: var(--color-background-secondary);
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+}
+
+.info-block-header i {
+  font-size: 18px;
+  color: var(--color-text-secondary);
+}
+
+.info-block-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.info-block-body {
+  padding: 0.75rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.info-row i {
+  font-size: 14px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.info-row.good i { color: var(--green); }
+.info-row.bad  i { color: #E24B4A; }
+.info-row.note i { color: #BA7517; }
+
+.info-row strong {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.info-divider {
+  height: 0.5px;
+  background: var(--color-border-tertiary);
+  margin: 4px 0;
+}
+
+/* ── Tip box ── */
+.tip-box {
+  margin: 0 1.5rem 1.5rem;
+  background: var(--amber-bg);
+  border: 0.5px solid #FAC775;
+  border-radius: var(--border-radius-md);
+  padding: 1rem 1.1rem;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.tip-box i {
+  font-size: 18px;
+  color: var(--amber);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.tip-text {
+  font-size: 13px;
+  color: #633806;
+  line-height: 1.6;
+}
+
+.tip-text strong {
+  font-weight: 500;
+  color: #412402;
+}
+
+/* ── Fade-in animation ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hn-wrap > * {
+  animation: fadeUp 0.4s ease both;
+}
+
+.hn-hero          { animation-delay: 0s; }
+.compass-card     { animation-delay: 0.05s; }
+.dir-grid         { animation-delay: 0.1s; }
+.info-block:nth-of-type(1) { animation-delay: 0.15s; }
+.info-block:nth-of-type(2) { animation-delay: 0.2s; }
+.tip-box          { animation-delay: 0.25s; }
