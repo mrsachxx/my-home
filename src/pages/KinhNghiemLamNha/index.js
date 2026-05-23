@@ -1,6 +1,127 @@
 import { useState } from 'react';
 import './KinhNghiemLamNha.css';
 
+const BASE = process.env.PUBLIC_URL + '/videos/';
+
+const videoCategories = [
+  {
+    id: 'v-tonghop',
+    color: 'amber',
+    icon: 'ti-layout-grid',
+    label: 'Tổng hợp chung',
+    videos: [
+      {
+        id: 'v1',
+        title: '10 kích thước sai 1cm — hỏi cả đời khi thi công nhà',
+        duration: '',
+        thumb: null,
+        src: BASE + 'tonghop-10-kich-thuoc-sai-1-cm-hoi-ca-djoi-khi-thi-cong-nha.mp4',
+      },
+      {
+        id: 'v1b',
+        title: 'Xây nhà càng nhanh càng dễ hỏng',
+        duration: '',
+        thumb: null,
+        src: BASE + 'xay-nha-cang-nhanh-cang-de-hong.mp4',
+      },
+      {
+        id: 'v2',
+        title: '10 lưu ý quan trọng cần thỏa thuận trước với thợ ốp lát',
+        duration: '04:37',
+        thumb: null,
+        src: BASE + '10-Luu-Y-Quan-Trong-Can-Thoa-Thuan-Truoc_Media_1476914820588967_002_720p.mp4',
+      },
+      {
+        id: 'v2',
+        title: 'Bí quyết chọn chậu rửa bát — 99% các bác không biết',
+        duration: '02:16',
+        thumb: null,
+        src: BASE + 'Bi-quyet-chon-chau-rua-bat-99-cac-bac-kh_Media_1108324518086454_002_720p.mp4',
+      },
+    ],
+  },
+  {
+    id: 'v-tho',
+    color: 'blue',
+    icon: 'ti-building',
+    label: 'Xây thô & Trát',
+    videos: [
+      {
+        id: 'v3',
+        title: '3 lưu ý tưới nước sau khi trát tường để tránh tường ộp, rạn nứt',
+        duration: '00:46',
+        thumb: null,
+        src: BASE + '3-luu-y-tuoi-nuoc-sau-khi-trat-tuong-de-_Media_2002229237172595_002_720p.mp4',
+      },
+      {
+        id: 'v4',
+        title: 'Tiêu chí xây cầu thang',
+        duration: '00:59',
+        thumb: null,
+        src: BASE + 'Luu-ky-khi-lam-cong-thang-nha-minh-nhe-c_Media_782772751510873_002_720p.mp4',
+      },
+    ],
+  },
+  {
+    id: 'v-diennuoc',
+    color: 'purple',
+    icon: 'ti-bolt',
+    label: 'Điện & Nước',
+    videos: [
+      {
+        id: 'v5',
+        title: 'Ổ điện gắn sai chỗ, vừa xấu vừa nguy hiểm',
+        duration: '01:28',
+        thumb: null,
+        src: BASE + 'O-dien-gan-sai-cho-vua-xau-vua-nguy-hiem_Media_953121323966535_002_720p.mp4',
+      },
+      {
+        id: 'v6',
+        title: 'Nhớ tìm hiểu kỹ trước khi làm 8 thứ này trong WC',
+        duration: '',
+        thumb: null,
+        src: BASE + 'nho-tim-hieu-ky-truoc-khi-lam-8-thu-nay-trong-wc.mp4',
+      },
+    ],
+  },
+  {
+    id: 'v-hoanthin',
+    color: 'teal',
+    icon: 'ti-paint',
+    label: 'Hoàn thiện & Nội thất',
+    videos: [
+      {
+        id: 'v8',
+        title: 'Tủ áo được nhiều người lựa chọn nhất',
+        duration: '00:57',
+        thumb: null,
+        src: BASE + 'Sau-hon-7000-du-an-thi-day-chinh-la-em-t_Media_720p.mp4',
+      },
+      {
+        id: 'v8b',
+        title: 'Sảnh vào nhà mà bừa bộn thì mất hết cả thần thái của căn nhà',
+        duration: '',
+        thumb: null,
+        src: BASE + 'cac-bac-oi-sanh-vao-nha-ma-bua-bon-thi-mat-het-ca-than-thai-cua-can-nha-djay.mp4',
+      },
+      {
+        id: 'v8c',
+        title: 'Thời buổi nào rồi mà vẫn để bếp mặc định 80cm',
+        duration: '',
+        thumb: null,
+        src: BASE + 'thoi-buoi-nao-roi-ma-van-dje-bep-mac-djinh-80cm.mp4',
+      },
+      {
+        id: 'v8',
+        title: 'Lát gạch mà quên 1 trong 8 điều này, toang chắc 100%',
+        duration: '02:03',
+        thumb: null,
+        src: BASE + 'Lat-gach-ma-quen-1-trong-8-dieu-nay-toan_Media_1653629009127010_002_720p.mp4',
+      },
+    ],
+  },
+];
+
 const tips = [
   {
     id: 'chuan-bi',
@@ -131,7 +252,107 @@ const colorMap = {
   purple: { iconBg: '#EEEDFE', iconColor: '#534AB7', badge: '#EEEDFE', badgeText: '#3C3489' },
 };
 
-function KinhNghiemLamNha() {
+// ─── Video Modal ────────────────────────────────────────────────────────────
+function VideoModal({ video, onClose }) {
+  if (!video) return null;
+  return (
+    <div className="knln-modal-overlay" onClick={onClose}>
+      <div className="knln-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="knln-modal-header">
+          <span className="knln-modal-title">{video.title}</span>
+          <button className="knln-modal-close" onClick={onClose} aria-label="Đóng">
+            <i className="ti ti-x" aria-hidden="true" />
+          </button>
+        </div>
+        <div className="knln-modal-body">
+          <video
+            key={video.id}
+            controls
+            autoPlay
+            className="knln-video-player"
+          >
+            <source src={video.src} type="video/mp4" />
+            Trình duyệt của bạn không hỗ trợ video.
+          </video>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Tab 1: Video Library ────────────────────────────────────────────────────
+function VideoTab() {
+  const [openCat, setOpenCat] = useState('v-mong');
+  const [activeVideo, setActiveVideo] = useState(null);
+
+  const totalVideos = videoCategories.reduce((s, c) => s + c.videos.length, 0);
+
+  return (
+    <div>
+      <p className="knln-tab-desc">
+        <i className="ti ti-video" aria-hidden="true" style={{ marginRight: 6 }} />
+        {totalVideos} video hướng dẫn thi công thực tế
+      </p>
+
+      <div className="knln-list">
+        {videoCategories.map((cat) => {
+          const c = colorMap[cat.color];
+          const isOpen = openCat === cat.id;
+
+          return (
+            <div className="knln-cat" key={cat.id}>
+              <button
+                className={`knln-cat-header${isOpen ? ' open' : ''}`}
+                onClick={() => setOpenCat(isOpen ? null : cat.id)}
+                aria-expanded={isOpen}
+              >
+                <div className="knln-cat-icon" style={{ background: c.iconBg }}>
+                  <i className={`ti ${cat.icon}`} style={{ color: c.iconColor }} aria-hidden="true" />
+                </div>
+                <span className="knln-cat-title">{cat.label}</span>
+                <span className="knln-cat-count" style={{ background: c.badge, color: c.badgeText }}>
+                  {cat.videos.length}
+                </span>
+                <i className={`ti ${isOpen ? 'ti-chevron-up' : 'ti-chevron-down'} knln-chevron`} aria-hidden="true" />
+              </button>
+
+              {isOpen && (
+                <div className="knln-items">
+                  {cat.videos.map((vid) => (
+                    <button
+                      key={vid.id}
+                      className="knln-video-row"
+                      onClick={() => setActiveVideo(vid)}
+                    >
+                      {/* Thumbnail */}
+                      <div className="knln-video-thumb" style={{ background: c.iconBg }}>
+                        <i className="ti ti-player-play-filled" style={{ color: c.iconColor, fontSize: 18 }} aria-hidden="true" />
+                      </div>
+                      {/* Info */}
+                      <div className="knln-video-info">
+                        <span className="knln-video-title">{vid.title}</span>
+                        <span className="knln-video-duration">
+                          <i className="ti ti-clock" aria-hidden="true" style={{ fontSize: 11, marginRight: 3 }} />
+                          {vid.duration}
+                        </span>
+                      </div>
+                      <i className="ti ti-chevron-right knln-video-arrow" aria-hidden="true" />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <VideoModal video={activeVideo} onClose={() => setActiveVideo(null)} />
+    </div>
+  );
+}
+
+// ─── Tab 2: Tips Accordion ───────────────────────────────────────────────────
+function TipsTab() {
   const [openCat, setOpenCat] = useState('chuan-bi');
   const [openItem, setOpenItem] = useState(null);
 
@@ -139,23 +360,15 @@ function KinhNghiemLamNha() {
     setOpenCat((prev) => (prev === id ? null : id));
     setOpenItem(null);
   };
-
   const toggleItem = (key) => setOpenItem((prev) => (prev === key ? null : key));
 
   return (
-    <div className="knln-outer">
-      {/* Header */}
-      <div className="knln-header">
-        <div className="knln-header-icon">
-          <i className="ti ti-bulb" aria-hidden="true" />
-        </div>
-        <div>
-          <p className="knln-header-title">Kinh Nghiệm Làm Nhà</p>
-          <p className="knln-header-sub">{tips.length} chủ đề · {tips.reduce((s, t) => s + t.items.length, 0)} kinh nghiệm thực tế</p>
-        </div>
-      </div>
+    <div>
+      <p className="knln-tab-desc">
+        <i className="ti ti-bulb" aria-hidden="true" style={{ marginRight: 6 }} />
+        {tips.reduce((s, t) => s + t.items.length, 0)} kinh nghiệm thực tế từ các công trình
+      </p>
 
-      {/* Accordion categories */}
       <div className="knln-list">
         {tips.map((cat) => {
           const c = colorMap[cat.color];
@@ -194,9 +407,7 @@ function KinhNghiemLamNha() {
                           <span>{item.q}</span>
                           <i className={`ti ${isOpen ? 'ti-minus' : 'ti-plus'} knln-toggle`} aria-hidden="true" />
                         </button>
-                        {isOpen && (
-                          <div className="knln-item-a">{item.a}</div>
-                        )}
+                        {isOpen && <div className="knln-item-a">{item.a}</div>}
                       </div>
                     );
                   })}
@@ -206,6 +417,50 @@ function KinhNghiemLamNha() {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+// ─── Root Component ──────────────────────────────────────────────────────────
+function KinhNghiemLamNha() {
+  const [activeTab, setActiveTab] = useState('video');
+
+  return (
+    <div className="knln-outer">
+      {/* Header */}
+      <div className="knln-header">
+        <div className="knln-header-icon">
+          <i className="ti ti-home-2" aria-hidden="true" />
+        </div>
+        <div>
+          <p className="knln-header-title">Kinh Nghiệm Làm Nhà</p>
+          <p className="knln-header-sub">
+            {videoCategories.reduce((s, c) => s + c.videos.length, 0)} video ·{' '}
+            {tips.reduce((s, t) => s + t.items.length, 0)} kinh nghiệm thực tế
+          </p>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="knln-tabs">
+        <button
+          className={`knln-tab-btn${activeTab === 'video' ? ' active' : ''}`}
+          onClick={() => setActiveTab('video')}
+        >
+          <i className="ti ti-video" aria-hidden="true" />
+          Video hướng dẫn
+        </button>
+        <button
+          className={`knln-tab-btn${activeTab === 'tips' ? ' active' : ''}`}
+          onClick={() => setActiveTab('tips')}
+        >
+          <i className="ti ti-bulb" aria-hidden="true" />
+          Kinh nghiệm
+        </button>
+      </div>
+
+      {/* Tab content */}
+      {activeTab === 'video' ? <VideoTab /> : <TipsTab />}
     </div>
   );
 }
