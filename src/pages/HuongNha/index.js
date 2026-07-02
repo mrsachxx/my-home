@@ -18,62 +18,6 @@ const badDirs = [
 const DIRS_8 = ['B', 'ĐB', 'Đ', 'ĐN', 'N', 'TN', 'T', 'TB'];
 const GOOD_SET = new Set(['ĐB', 'TB', 'T', 'TN']);
 
-function CompassSVG() {
-  const cx = 55, cy = 55, r = 46, inner = 22;
-  const n = 8;
-  const segments = DIRS_8.map((label, i) => {
-    const startAngle = (i * 360) / n - 90 - 360 / (2 * n);
-    const endAngle   = startAngle + 360 / n;
-    const toRad = (deg) => (deg * Math.PI) / 180;
-    const x1 = cx + r * Math.cos(toRad(startAngle));
-    const y1 = cy + r * Math.sin(toRad(startAngle));
-    const x2 = cx + r * Math.cos(toRad(endAngle));
-    const y2 = cy + r * Math.sin(toRad(endAngle));
-    const xi1 = cx + inner * Math.cos(toRad(startAngle));
-    const yi1 = cy + inner * Math.sin(toRad(startAngle));
-    const xi2 = cx + inner * Math.cos(toRad(endAngle));
-    const yi2 = cy + inner * Math.sin(toRad(endAngle));
-    const midAngle = startAngle + 180 / n;
-    const textR = (r + inner) / 2;
-    const tx = cx + textR * Math.cos(toRad(midAngle));
-    const ty = cy + textR * Math.sin(toRad(midAngle));
-    const isGood = GOOD_SET.has(label);
-    return { label, x1, y1, x2, y2, xi1, yi1, xi2, yi2, tx, ty, isGood };
-  });
-
-  return (
-    <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
-      {segments.map(({ label, x1, y1, x2, y2, xi1, yi1, xi2, yi2, tx, ty, isGood }) => (
-        <g key={label}>
-          <path
-            d={`M ${xi1} ${yi1} L ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2} L ${xi2} ${yi2} A ${inner} ${inner} 0 0 0 ${xi1} ${yi1} Z`}
-            fill={isGood ? '#E1F5EE' : '#FCEBEB'}
-            stroke="#ffffff"
-            strokeWidth="1.5"
-          />
-          <text
-            x={tx} y={ty}
-            textAnchor="middle"
-            dominantBaseline="middle"
-            fontSize="7"
-            fontFamily="'Be Vietnam Pro', sans-serif"
-            fontWeight="500"
-            fill={isGood ? '#085041' : '#791F1F'}
-          >
-            {label}
-          </text>
-        </g>
-      ))}
-      {/* Center dot */}
-      <circle cx={cx} cy={cy} r={inner} fill="#fff" stroke="#e5e7eb" strokeWidth="0.5" />
-      <circle cx={cx} cy={cy} r="5" fill="#1D9E75" />
-      {/* N marker */}
-      <text x={cx} y={cy + 2} textAnchor="middle" dominantBaseline="middle"
-        fontSize="5" fontFamily="'Be Vietnam Pro', sans-serif" fontWeight="500" fill="#fff">K</text>
-    </svg>
-  );
-}
-
 function HuongNha() {
   return (
     <div className="hn-wrap">
@@ -93,24 +37,6 @@ function HuongNha() {
             <i className="ti ti-flame" aria-hidden="true" />
             Mệnh Sơn Đầu Hỏa
           </span>
-        </div>
-      </div>
-
-      {/* Compass */}
-      <div className="hn-section">
-        <p className="hn-label">La bàn bát trạch</p>
-      </div>
-      <div className="compass-card">
-        <div className="compass-wrap">
-          <CompassSVG />
-        </div>
-        <div className="compass-info">
-          <div className="compass-direction">Hướng Nam</div>
-          <div className="compass-type">Hướng nhà hiện tại</div>
-          <div className="compass-note">
-            Hướng Nam thuộc cung <strong>Lục Sát</strong> — không hợp tuổi.<br />
-            Có thể xử lý tốt qua bố trí bếp, bàn thờ và cửa phòng.
-          </div>
         </div>
       </div>
 

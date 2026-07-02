@@ -4,7 +4,7 @@ import './Home.css';
 
 const progressSteps = [
   { label: 'Khảo sát', state: 'active' },
-  { label: 'Thiết kế', state: 'pending' },
+  { label: 'Thiết kế', state: 'active' },
   { label: 'Phê duyệt', state: 'pending' },
   { label: 'Khởi công', state: 'pending' },
   { label: 'Hoàn thiện', state: 'pending' },
@@ -138,7 +138,7 @@ function Home() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (pbarRef.current) pbarRef.current.style.width = '10%';
+      if (pbarRef.current) pbarRef.current.style.width = '30%';
     }, 300);
     return () => clearTimeout(timer);
   }, []);
@@ -173,8 +173,8 @@ function Home() {
       </div>
       <div className="progress-bar-wrap">
         <div className="progress-header">
-          <span className="progress-label">Đang khảo sát</span>
-          <span className="progress-pct">10%</span>
+          <span className="progress-label">Đang thiết kế</span>
+          <span className="progress-pct">20%</span>
         </div>
         <div className="progress-track">
           <div className="progress-fill" ref={pbarRef} />

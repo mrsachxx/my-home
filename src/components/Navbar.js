@@ -6,8 +6,6 @@ const navLinks = [
   { path: '/lich-khoi-cong',          label: 'Lịch Khởi Công',   icon: 'ti-calendar-event' },
   { path: '/huong-nha',               label: 'Hướng Nhà',        icon: 'ti-compass' },
   { path: '/ban-thiet-ke',            label: 'Bản Thiết Kế',     icon: 'ti-ruler-2' },
-  { path: '/ban-thiet-ke-tham-khao',  label: 'TK Tham Khảo',    icon: 'ti-books' },
-  { path: '/khao-sat-gia',            label: 'Khảo Sát Giá',     icon: 'ti-search' },
 ];
 
 function Navbar() {

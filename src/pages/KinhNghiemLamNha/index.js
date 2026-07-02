@@ -25,6 +25,14 @@ const videoCategories = [
         src: BASE + 'xay-nha-cang-nhanh-cang-de-hong.mp4',
       },
       {
+        id: 'vfb1',
+        title: 'Video Facebook — mẫu nhúng',
+        duration: '',
+        thumb: null,
+        type: 'facebook',
+        src: '2204308887052979',
+      },
+      {
         id: 'v2',
         title: '10 lưu ý quan trọng cần thỏa thuận trước với thợ ốp lát',
         duration: '04:37',
@@ -252,9 +260,21 @@ const colorMap = {
   purple: { iconBg: '#EEEDFE', iconColor: '#534AB7', badge: '#EEEDFE', badgeText: '#3C3489' },
 };
 
+// ─── Helpers ────────────────────────────────────────────────────────────────
+function fbEmbedUrl(videoIdOrUrl) {
+  const id = String(videoIdOrUrl).replace(/\D/g, '').length > 5
+    ? String(videoIdOrUrl).replace(/\D/g, '')
+    : videoIdOrUrl;
+  const href = encodeURIComponent(`https://www.facebook.com/watch/?v=${id}`);
+  return `https://www.facebook.com/plugins/video.php?href=${href}&show_text=false&width=1280&height=720&autoplay=true`;
+}
+
 // ─── Video Modal ────────────────────────────────────────────────────────────
 function VideoModal({ video, onClose }) {
   if (!video) return null;
+
+  const isFacebook = video.type === 'facebook';
+
   return (
     <div className="knln-modal-overlay" onClick={onClose}>
       <div className="knln-modal" onClick={(e) => e.stopPropagation()}>
@@ -265,15 +285,28 @@ function VideoModal({ video, onClose }) {
           </button>
         </div>
         <div className="knln-modal-body">
-          <video
-            key={video.id}
-            controls
-            autoPlay
-            className="knln-video-player"
-          >
-            <source src={video.src} type="video/mp4" />
-            Trình duyệt của bạn không hỗ trợ video.
-          </video>
+          <div className="knln-video-wrapper">
+            {isFacebook ? (
+              <iframe
+                key={video.id}
+                src={fbEmbedUrl(video.src)}
+                className="knln-video-player"
+                allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                allowFullScreen
+                title={video.title}
+              />
+            ) : (
+              <video
+                key={video.id}
+                controls
+                autoPlay
+                className="knln-video-player"
+              >
+                <source src={video.src} type="video/mp4" />
+                Trình duyệt của bạn không hỗ trợ video.
+              </video>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -282,7 +315,7 @@ function VideoModal({ video, onClose }) {
 
 // ─── Tab 1: Video Library ────────────────────────────────────────────────────
 function VideoTab() {
-  const [openCat, setOpenCat] = useState('v-mong');
+  const [openCat, setOpenCat] = useState('v-tonghop');
   const [activeVideo, setActiveVideo] = useState(null);
 
   const totalVideos = videoCategories.reduce((s, c) => s + c.videos.length, 0);

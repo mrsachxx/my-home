@@ -13,23 +13,6 @@ const videos = [
     title: 'Siêu phẩm 4K giá rẻ — nhà vườn 2 tầng mái Nhật cực đẹp',
     pills: ['2 tầng mái Nhật', 'Nhà vườn', 'Trọn gói'],
   },
-  {
-    id: '5hlPN0OCkhQ',
-    startAt: null,
-    label: 'Video 2',
-    code: 'MH06235',
-    title: 'Báo giá chi tiết nhà vườn mái Nhật tân cổ Maxhome 2026',
-    pills: ['Báo giá 2026', 'Tân cổ điển', 'Mái Nhật'],
-  },
-  {
-    id: 'EC6-Xw5D4Pc',
-    startAt: null,
-    label: 'Shorts',
-    code: null,
-    title: 'Nhà 2 tầng mái Nhật 7×11m',
-    pills: ['7×11m', '2 tầng', 'Mái Nhật'],
-    isShorts: true,
-  },
 ];
 
 function VideoCard({ video }) {
