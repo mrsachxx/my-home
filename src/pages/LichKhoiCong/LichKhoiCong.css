@@ -5,6 +5,13 @@
   margin: 0 auto;
 }
 
+/* ── Wide screens (desktop) ── */
+@media (min-width: 900px) {
+  .lkc-outer {
+    max-width: 900px;
+  }
+}
+
 /* Header */
 .lkc-header {
   display: flex;

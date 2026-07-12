@@ -5,6 +5,13 @@
   margin: 0 auto;
 }
 
+/* ── Wide screens (desktop) ── */
+@media (min-width: 900px) {
+  .knln-outer {
+    max-width: 900px;
+  }
+}
+
 /* Header */
 .knln-header {
   display: flex;

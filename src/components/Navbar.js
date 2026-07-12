@@ -4,7 +4,7 @@ import './Navbar.css';
 const navLinks = [
   { path: '/',                        label: 'Trang Chủ',         icon: 'ti-home' },
   { path: '/lich-khoi-cong',          label: 'Lịch Khởi Công',   icon: 'ti-calendar-event' },
-  { path: '/huong-nha',               label: 'Hướng Nhà',        icon: 'ti-compass' },
+  { path: '/chi-phi',                 label: 'Chi Phí',          icon: 'ti-receipt-2' },
   { path: '/ban-thiet-ke',            label: 'Bản Thiết Kế',     icon: 'ti-ruler-2' },
 ];
 

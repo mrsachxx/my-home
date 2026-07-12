@@ -1,0 +1,13 @@
+.ksg-outer {
+  padding: 1.5rem;
+  max-width: 680px;
+  margin: 0 auto;
+  font-family: system-ui, sans-serif;
+}
+
+/* ── Wide screens (desktop) ── */
+@media (min-width: 900px) {
+  .ksg-outer {
+    max-width: 960px;
+  }
+}

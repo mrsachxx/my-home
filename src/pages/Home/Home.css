@@ -343,3 +343,14 @@
   color: var(--color-text-secondary);
   flex-shrink: 0;
 }
+
+/* ── Wide screens (desktop) ── */
+@media (min-width: 900px) {
+  .home-wrap {
+    max-width: 1080px;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}

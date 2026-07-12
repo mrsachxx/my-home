@@ -325,3 +325,14 @@
 .info-block:nth-of-type(1) { animation-delay: 0.15s; }
 .info-block:nth-of-type(2) { animation-delay: 0.2s; }
 .tip-box          { animation-delay: 0.25s; }
+
+/* ── Wide screens (desktop) ── */
+@media (min-width: 900px) {
+  .hn-wrap {
+    max-width: 900px;
+  }
+
+  .dir-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

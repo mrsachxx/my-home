@@ -5,6 +5,13 @@
   margin: 0 auto;
 }
 
+/* ── Wide screens (desktop) ── */
+@media (min-width: 900px) {
+  .chp-outer {
+    max-width: 960px;
+  }
+}
+
 /* Header */
 .chp-header {
   display: flex;

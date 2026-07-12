@@ -1,4 +1,5 @@
 import { useState, useMemo } from "react";
+import "./KhaoSatGia.css";
 
 const data = [
   {
@@ -278,7 +279,7 @@ export default function KhaoSatGia() {
   const totalRecords = filtered.reduce((a, p) => a + p.records.length, 0);
 
   return (
-    <div style={{ padding: "1.5rem", maxWidth: 680, margin: "0 auto", fontFamily: "system-ui, sans-serif" }}>
+    <div className="ksg-outer">
 
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: "1.25rem" }}>

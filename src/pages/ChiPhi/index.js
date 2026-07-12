@@ -34,6 +34,8 @@ const satThepItems = [
 
 // Sheet "Trang tính3" — ép cọc bê tông (đã thanh toán)
 const cocRow = {
+  date: '29/06/2026',
+  paidDate: '12/07/2026',
   metCoc: 6,
   dauCoc: 52,
   tongSoLuong: 312,
@@ -42,6 +44,12 @@ const cocRow = {
   congTho: 11000000,
   giam: 360000,
   tongTien: 59000000,
+};
+
+// Ứng trước công thợ (đã thanh toán)
+const congThoUngRow = {
+  date: '12/07/2026',
+  amount: 50000000,
 };
 
 const catSoiItems = [
@@ -56,6 +64,7 @@ const catSoiItems = [
 const tabs = [
   { id: 'satXi', label: 'Sắt & Xi măng', icon: 'ti-building-bridge-2' },
   { id: 'coc', label: 'Cọc', icon: 'ti-stack-2' },
+  { id: 'congTho', label: 'Công thợ', icon: 'ti-users' },
   { id: 'catSoi', label: 'Cát & Sỏi', icon: 'ti-triangle' },
   { id: 'chiTiet', label: 'Chi tiết', icon: 'ti-list-details' },
 ];
@@ -75,18 +84,29 @@ function ChiPhi() {
   const satThepTotal = sum(satThepItems);
   const satXiTotal = xiMangTotal + satThepTotal;
   const cocTotal = cocRow.tongTien;
-  const paidTotal = satXiTotal + cocTotal;
+  const congThoUngTotal = congThoUngRow.amount;
+  const paidTotal = satXiTotal + cocTotal + congThoUngTotal;
   const catSoiTotal = sum(catSoiItems);
   const grandTotal = paidTotal + catSoiTotal;
 
   const chiTietRows = [
     {
-      date: null,
+      date: cocRow.date,
       name: `Ép cọc bê tông (${cocRow.metCoc}m × ${cocRow.dauCoc} đầu cọc = ${cocRow.tongSoLuong}m)`,
+      note: `Thanh toán ${cocRow.paidDate}`,
       unit: 'trọn gói',
       qty: 1,
       price: cocRow.tongTien,
       loai: 'Cọc',
+      paid: true,
+    },
+    {
+      date: congThoUngRow.date,
+      name: 'Ứng tiền công thợ',
+      unit: 'trọn gói',
+      qty: 1,
+      price: congThoUngRow.amount,
+      loai: 'Công thợ',
       paid: true,
     },
     ...xiMangItems.map((it) => ({ ...it, loai: 'Xi măng', paid: true })),
@@ -203,11 +223,11 @@ function ChiPhi() {
         <div className="chp-panel">
           <div className="chp-status-bar chp-status-paid">
             <i className="ti ti-circle-check" aria-hidden="true" />
-            Đã thanh toán · {fmt(cocTotal)}
+            Đã thanh toán {cocRow.paidDate} · {fmt(cocTotal)}
           </div>
           <div className="chp-group">
             <div className="chp-group-head">
-              <span className="chp-group-title">Ép cọc bê tông</span>
+              <span className="chp-group-title">Ép cọc bê tông · Ép ngày {cocRow.date}</span>
               <span className="chp-group-total">{fmt(cocTotal)}</span>
             </div>
             <div className="chp-tbl-wrap">
@@ -234,6 +254,39 @@ function ChiPhi() {
                     <td className="chp-right">{cocRow.congTho.toLocaleString('vi-VN')}</td>
                     <td className="chp-right">{cocRow.giam.toLocaleString('vi-VN')}</td>
                     <td className="chp-right chp-bold">{fmt(cocRow.tongTien)}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {tab === 'congTho' && (
+        <div className="chp-panel">
+          <div className="chp-status-bar chp-status-paid">
+            <i className="ti ti-circle-check" aria-hidden="true" />
+            Đã thanh toán · {congThoUngRow.date} · {fmt(congThoUngTotal)}
+          </div>
+          <div className="chp-group">
+            <div className="chp-group-head">
+              <span className="chp-group-title">Ứng tiền công thợ · {congThoUngRow.date}</span>
+              <span className="chp-group-total">{fmt(congThoUngTotal)}</span>
+            </div>
+            <div className="chp-tbl-wrap">
+              <table className="chp-tbl">
+                <thead>
+                  <tr>
+                    <th>Ngày</th>
+                    <th>Nội dung</th>
+                    <th>Số tiền</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="chp-center">{congThoUngRow.date}</td>
+                    <td>Ứng tiền công thợ</td>
+                    <td className="chp-right chp-bold">{fmt(congThoUngRow.amount)}</td>
                   </tr>
                 </tbody>
               </table>
@@ -301,7 +354,7 @@ function ChiPhi() {
         </div>
       )}
 
-      <p className="chp-footer">* Số liệu tổng hợp từ hóa đơn thực tế (ép cọc, sắt, xi măng, cát, sỏi), chưa bao gồm các hạng mục khác.</p>
+      <p className="chp-footer">* Số liệu tổng hợp từ hóa đơn thực tế (ép cọc, công thợ, sắt, xi măng, cát, sỏi), chưa bao gồm các hạng mục khác.</p>
     </div>
   );
 }
