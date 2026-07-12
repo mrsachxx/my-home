@@ -6,7 +6,7 @@ import LichKhoiCong from './pages/LichKhoiCong';
 import HuongNha from './pages/HuongNha';
 import BanThietKe from './pages/BanThietKe';
 import BanThietKeThamKhao from './pages/BanThietKeThamKhao';
-import DuToanChiPhi from './pages/DuToanChiPhi';
+import ChiPhi from './pages/ChiPhi';
 import KinhNghiemLamNha from './pages/KinhNghiemLamNha';
 import KhaoSatGia from './pages/KhaoSatGia';
 import './App.css';
@@ -23,7 +23,7 @@ function App() {
             <Route path="/huong-nha" element={<HuongNha />} />
             <Route path="/ban-thiet-ke" element={<BanThietKe />} />
             <Route path="/ban-thiet-ke-tham-khao" element={<BanThietKeThamKhao />} />
-            <Route path="/du-toan-chi-phi" element={<DuToanChiPhi />} />
+            <Route path="/chi-phi" element={<ChiPhi />} />
             <Route path="/kinh-nghiem-lam-nha" element={<KinhNghiemLamNha />} />
             <Route path="/khao-sat-gia" element={<KhaoSatGia />} />
           </Routes>

@@ -44,12 +44,12 @@ const cards = [
     badge: '8 mẫu',
   },
   {
-    path: '/du-toan-chi-phi',
+    path: '/chi-phi',
     color: 'teal',
-    icon: 'ti-calculator',
-    title: 'Dự toán chi phí',
-    desc: 'Ước tính sơ bộ theo từng hạng mục',
-    badge: '6 hạng mục',
+    icon: 'ti-receipt-2',
+    title: 'Chi phí',
+    desc: 'Chi phí vật tư theo hóa đơn thực tế',
+    badge: 'Đã cập nhật',
   },
   {
     path: '/kinh-nghiem-lam-nha',
