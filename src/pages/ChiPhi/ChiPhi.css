@@ -113,15 +113,22 @@
   border-radius: 10px;
   padding: 4px;
   margin-bottom: 1rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.chp-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .chp-tab {
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 8px 6px;
+  padding: 8px 12px;
   font-size: 12px;
   font-weight: 500;
   color: var(--color-text-secondary, #6b7280);
@@ -278,4 +285,59 @@
   margin-top: 1rem;
   padding-left: 4px;
   font-style: italic;
+}
+
+/* Export mode: unclip scrollable areas so the exported image shows everything */
+.chp-exporting .chp-tbl-wrap {
+  overflow: visible;
+}
+
+.chp-exporting .chp-tabs {
+  overflow: visible;
+  flex-wrap: wrap;
+}
+
+/* Export toolbar */
+.chp-export-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.chp-export-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 14px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 10px;
+  border: 0.5px solid var(--color-border-tertiary, #e5e7eb);
+  background: var(--color-background-primary, #fff);
+  color: var(--color-text-primary, #1a1a1a);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.chp-export-btn:hover {
+  background: var(--color-background-secondary, #f9fafb);
+}
+
+.chp-export-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.chp-export-btn i {
+  font-size: 14px;
+}
+
+.chp-export-btn-all {
+  background: #E1F5EE;
+  border-color: #9FE1CB;
+  color: #0F6E56;
+}
+
+.chp-export-btn-all:hover {
+  background: #d3f0e5;
 }

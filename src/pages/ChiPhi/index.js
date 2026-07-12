@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { toPng } from 'html-to-image';
 import './ChiPhi.css';
 
 // Dữ liệu lấy từ file "Hóa đơn.xlsx" (2 sheet: "sắt xi", "cát sỏi")
@@ -62,11 +63,11 @@ const catSoiItems = [
 ];
 
 const tabs = [
-  { id: 'satXi', label: 'Sắt & Xi măng', icon: 'ti-building-bridge-2' },
-  { id: 'coc', label: 'Cọc', icon: 'ti-stack-2' },
-  { id: 'congTho', label: 'Công thợ', icon: 'ti-users' },
-  { id: 'catSoi', label: 'Cát & Sỏi', icon: 'ti-triangle' },
-  { id: 'chiTiet', label: 'Chi tiết', icon: 'ti-list-details' },
+  { id: 'satXi', label: 'Sắt & Xi măng', icon: 'ti-building-bridge-2', slug: 'sat-xi-mang' },
+  { id: 'coc', label: 'Cọc', icon: 'ti-stack-2', slug: 'coc' },
+  { id: 'congTho', label: 'Công thợ', icon: 'ti-users', slug: 'cong-tho' },
+  { id: 'catSoi', label: 'Cát & Sỏi', icon: 'ti-triangle', slug: 'cat-soi' },
+  { id: 'chiTiet', label: 'Chi tiết', icon: 'ti-list-details', slug: 'chi-tiet' },
 ];
 
 function fmt(n) {
@@ -77,8 +78,88 @@ function sum(items) {
   return items.reduce((s, it) => s + it.qty * it.price, 0);
 }
 
+function downloadImage(dataUrl, filename) {
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = dataUrl;
+  link.click();
+}
+
 function ChiPhi() {
   const [tab, setTab] = useState('satXi');
+  const [exporting, setExporting] = useState(false);
+  const captureRef = useRef(null);
+
+  const captureNode = async () => {
+    const node = captureRef.current;
+    node.classList.add('chp-exporting');
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    // Tables may be wider than the (mobile) viewport and normally scroll
+    // horizontally inside .chp-tbl-wrap. scrollWidth on a non-scrolling
+    // ancestor doesn't pick that up, so measure each table directly and
+    // force the container wide enough to fit it before capturing.
+    const tables = node.querySelectorAll('.chp-tbl');
+    let neededWidth = node.clientWidth;
+    tables.forEach((t) => {
+      const w = t.scrollWidth + 64;
+      if (w > neededWidth) neededWidth = w;
+    });
+
+    const prevWidth = node.style.width;
+    const prevMaxWidth = node.style.maxWidth;
+    node.style.width = `${neededWidth}px`;
+    node.style.maxWidth = 'none';
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+
+    try {
+      return await toPng(node, {
+        backgroundColor: '#f5f6fa',
+        pixelRatio: 2,
+        width: node.scrollWidth,
+        height: node.scrollHeight,
+      });
+    } finally {
+      node.style.width = prevWidth;
+      node.style.maxWidth = prevMaxWidth;
+      node.classList.remove('chp-exporting');
+    }
+  };
+
+  const handleExportCurrent = async () => {
+    if (exporting) return;
+    setExporting(true);
+    try {
+      const activeTab = tabs.find((t) => t.id === tab);
+      const dataUrl = await captureNode();
+      downloadImage(dataUrl, `chi-phi-${activeTab.slug}.png`);
+    } catch (err) {
+      console.error('Xuất ảnh thất bại', err);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportAll = async () => {
+    if (exporting) return;
+    const originalTab = tab;
+    setExporting(true);
+    try {
+      for (const t of tabs) {
+        setTab(t.id);
+        // wait for React to re-render the new tab's content
+        await new Promise((resolve) => setTimeout(resolve, 250));
+        const dataUrl = await captureNode();
+        downloadImage(dataUrl, `chi-phi-${t.slug}.png`);
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+    } catch (err) {
+      console.error('Xuất tất cả thất bại', err);
+    } finally {
+      setTab(originalTab);
+      setExporting(false);
+    }
+  };
 
   const xiMangTotal = sum(xiMangItems);
   const satThepTotal = sum(satThepItems);
@@ -160,6 +241,7 @@ function ChiPhi() {
 
   return (
     <div className="chp-outer">
+      <div ref={captureRef}>
       {/* Header */}
       <div className="chp-header">
         <div className="chp-header-icon">
@@ -355,6 +437,19 @@ function ChiPhi() {
       )}
 
       <p className="chp-footer">* Số liệu tổng hợp từ hóa đơn thực tế (ép cọc, công thợ, sắt, xi măng, cát, sỏi), chưa bao gồm các hạng mục khác.</p>
+      </div>
+
+      {/* Export toolbar */}
+      <div className="chp-export-bar">
+        <button className="chp-export-btn" onClick={handleExportCurrent} disabled={exporting}>
+          <i className="ti ti-photo" aria-hidden="true" />
+          {exporting ? 'Đang xuất...' : 'Xuất ảnh tab này'}
+        </button>
+        <button className="chp-export-btn chp-export-btn-all" onClick={handleExportAll} disabled={exporting}>
+          <i className="ti ti-file-export" aria-hidden="true" />
+          Xuất tất cả
+        </button>
+      </div>
     </div>
   );
 }
